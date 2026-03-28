@@ -1430,6 +1430,59 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+    /* ── Cookie Banner ── */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2000;
+      background: rgba(8,8,8,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(201,169,110,0.25);
+      padding: 20px clamp(20px, 5vw, 60px);
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    #cookie-banner.cb-visible { transform: translateY(0); }
+    .cb-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .cb-text {
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      line-height: 1.6;
+      flex: 1;
+      min-width: 200px;
+    }
+    .cb-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+    .cb-btns { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
+    .cb-btn {
+      padding: 9px 22px;
+      border-radius: 100px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .cb-btn--accept { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
+    .cb-btn--accept:hover { opacity: 0.85; }
+    .cb-btn--reject { background: transparent; color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.15); }
+    .cb-btn--reject:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+    @media (max-width: 600px) {
+      .cb-inner { flex-direction: column; align-items: flex-start; }
+      .cb-btns { width: 100%; }
+      .cb-btn { flex: 1; text-align: center; }
+    }
+
     @keyframes shine {
       from { background-position: 200% 0; }
       to   { background-position: -200% 0; }
@@ -1559,6 +1612,20 @@
   </style>
 </head>
 <body>
+
+  <!-- ═══ COOKIE BANNER ═══ -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Preferenze cookie">
+    <div class="cb-inner">
+      <p class="cb-text">
+        Utilizziamo cookie tecnici necessari al funzionamento del sito. Nessun cookie di tracciamento o profilazione.
+        <a href="cookie.html">Cookie Policy</a> · <a href="privacy.html">Privacy Policy</a>
+      </p>
+      <div class="cb-btns">
+        <button class="cb-btn cb-btn--reject" id="cb-reject">Rifiuta</button>
+        <button class="cb-btn cb-btn--accept" id="cb-accept">Accetta</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ MOBILE NAV OVERLAY ═══ -->
   <div id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu di navigazione">
@@ -1992,7 +2059,14 @@
             <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           </a>
         </div>
-        <p class="footer-copy">© 2026 Giorgia Piras · Tutti i diritti riservati · Design & Tecnologia: <a href="https://transiva.it" target="_blank" rel="noopener" class="shining-text">Transiva</a></p>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <nav style="display:flex;gap:16px;" aria-label="Link legali">
+            <a href="privacy.html" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#c9a96e'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">Privacy</a>
+            <a href="termini.html" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#c9a96e'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">Termini</a>
+            <a href="cookie.html" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#c9a96e'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">Cookie</a>
+          </nav>
+          <p class="footer-copy">© 2026 Giorgia Piras · Design & Tecnologia: <a href="https://transiva.it" target="_blank" rel="noopener" class="shining-text">Transiva</a></p>
+        </div>
       </div>
     </div>
 
@@ -2451,6 +2525,24 @@
           gsap.to('.mc-results', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 0.3 });
         }
       });
+    }());
+
+    /* ═══════════════════════════════════════
+       COOKIE BANNER
+    ═══════════════════════════════════════ */
+    (function () {
+      const banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+      // Show banner if no consent stored yet
+      if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(() => banner.classList.add('cb-visible'), 800);
+      }
+      function dismiss(choice) {
+        localStorage.setItem('cookieConsent', choice);
+        banner.classList.remove('cb-visible');
+      }
+      document.getElementById('cb-accept').addEventListener('click', () => dismiss('accepted'));
+      document.getElementById('cb-reject').addEventListener('click', () => dismiss('rejected'));
     }());
 
     /* ═══════════════════════════════════════

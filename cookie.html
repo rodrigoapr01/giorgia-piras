@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Policy — Giorgia Piras</title>
+  <meta name="robots" content="noindex">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black: #0a0a0a; --gold: #c9a96e; --white: #ffffff; }
+    html { background: var(--black); color: var(--white); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; }
+    body { min-height: 100vh; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .legal-header { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(20px, 5vw, 60px); background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); z-index: 100; }
+    .legal-logo { font-family: Impact, 'Arial Narrow', sans-serif; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; color: var(--white); text-decoration: none; }
+    .legal-back { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); transition: color 0.2s; }
+    .legal-back:hover { color: var(--gold); text-decoration: none; }
+    .legal-content { max-width: 760px; margin: 0 auto; padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 40px) clamp(60px, 10vw, 100px); }
+    .legal-tag { display: block; color: var(--gold); font-size: 9px; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 16px; }
+    .legal-title { font-family: Impact, 'Arial Narrow', sans-serif; font-size: clamp(32px, 6vw, 56px); font-weight: 900; text-transform: uppercase; line-height: 0.9; letter-spacing: -1px; margin-bottom: 12px; }
+    .legal-date { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .legal-section { margin-bottom: 40px; }
+    .legal-section h2 { font-family: Impact, 'Arial Narrow', sans-serif; font-size: clamp(16px, 2.5vw, 22px); text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 14px; }
+    .legal-section p { color: rgba(255,255,255,0.65); font-size: 14px; margin-bottom: 12px; }
+    .legal-section ul { color: rgba(255,255,255,0.65); font-size: 14px; padding-left: 20px; margin-bottom: 12px; }
+    .legal-section li { margin-bottom: 6px; }
+    .legal-section strong { color: rgba(255,255,255,0.85); }
+    /* Cookie table */
+    .cookie-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+    .cookie-table th { text-align: left; padding: 10px 12px; background: rgba(255,255,255,0.05); color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .cookie-table td { padding: 10px 12px; color: rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+    .cookie-table tr:last-child td { border-bottom: none; }
+    /* Preference buttons */
+    .cookie-pref-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .cookie-pref-btn {
+      padding: 10px 24px; border-radius: 100px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border: 1px solid;
+    }
+    .cookie-pref-btn--accept { background: var(--gold); color: #0a0a0a; border-color: var(--gold); }
+    .cookie-pref-btn--accept:hover { opacity: 0.85; }
+    .cookie-pref-btn--reject { background: transparent; color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.15); }
+    .cookie-pref-btn--reject:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+    .cookie-status { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+    .legal-footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 28px clamp(20px, 5vw, 60px); display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; }
+    .legal-footer p { font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+    .legal-footer-links { display: flex; gap: 20px; }
+    .legal-footer-links a { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+    .legal-footer-links a:hover { color: var(--gold); text-decoration: none; }
+    @media (max-width: 600px) { .legal-footer { flex-direction: column; align-items: center; text-align: center; } .cookie-table { font-size: 12px; } .cookie-table th, .cookie-table td { padding: 8px; } }
+  </style>
+</head>
+<body>
+
+  <header class="legal-header">
+    <a href="index.html" class="legal-logo">Giorgia Piras</a>
+    <a href="index.html" class="legal-back">← Torna al sito</a>
+  </header>
+
+  <main class="legal-content">
+    <span class="legal-tag">Documenti legali</span>
+    <h1 class="legal-title">Cookie<br>Policy</h1>
+    <p class="legal-date">Ultimo aggiornamento: marzo 2026</p>
+
+    <div class="legal-section">
+      <h2>1. Cosa sono i cookie</h2>
+      <p>I cookie sono piccoli file di testo che i siti web salvano nel browser dell'utente durante la navigazione. Vengono utilizzati per far funzionare il sito in modo corretto, ricordare le preferenze dell'utente e raccogliere informazioni statistiche.</p>
+      <p>La presente Cookie Policy è redatta in conformità con la normativa italiana ed europea vigente, inclusi il Regolamento UE 2016/679 (GDPR), il D.Lgs. 196/2003 (Codice Privacy) e le Linee Guida del Garante per la Protezione dei Dati Personali del 10 giugno 2021.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>2. Cookie tecnici (necessari)</h2>
+      <p>Questo sito utilizza esclusivamente cookie tecnici strettamente necessari al suo funzionamento. Ai sensi dell'art. 122 del Codice Privacy e delle Linee Guida del Garante, questi cookie sono esenti dall'obbligo di consenso.</p>
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Finalità</th>
+            <th>Durata</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>cookieConsent</strong></td>
+            <td>Memorizza la preferenza cookie dell'utente</td>
+            <td>1 anno</td>
+            <td>localStorage (prima parte)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Il sito non utilizza cookie di profilazione, cookie analitici o qualsiasi altro tipo di cookie di tracciamento di prima parte.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>3. Cookie di terze parti (tecnici CDN)</h2>
+      <p>Per il corretto funzionamento delle animazioni e degli effetti visivi, il sito carica librerie da reti di distribuzione di contenuti (CDN) esterne. Questi fornitori potrebbero impostare cookie tecnici propri:</p>
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th>Fornitore</th>
+            <th>Servizio</th>
+            <th>Privacy Policy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cloudflare Inc.</strong></td>
+            <td>CDN per libreria GSAP (cdnjs.cloudflare.com)</td>
+            <td><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a></td>
+          </tr>
+          <tr>
+            <td><strong>jsDelivr (Prospect One)</strong></td>
+            <td>CDN per libreria Lenis (cdn.jsdelivr.net)</td>
+            <td><a href="https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net" target="_blank" rel="noopener">jsdelivr.com/privacy-policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>esm.sh</strong></td>
+            <td>CDN per libreria grafica shaders</td>
+            <td><a href="https://esm.sh" target="_blank" rel="noopener">esm.sh</a></td>
+          </tr>
+          <tr>
+            <td><strong>GitHub Inc.</strong></td>
+            <td>Hosting del sito (GitHub Pages)</td>
+            <td><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">github.com/privacy</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Questi cookie tecnici sono essenziali per l'erogazione dei servizi CDN e rientrano nella categoria dei cookie necessari, esentati dal consenso.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>4. Cookie di social network</h2>
+      <p>Il sito contiene link a piattaforme social (Instagram, Facebook, WhatsApp). I cookie di queste piattaforme vengono impostati <strong>solo se l'utente clicca attivamente</strong> sui relativi link e accede ai siti di terze parti. Il presente sito non integra pulsanti social con caricamento automatico.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>5. Gestisci le tue preferenze</h2>
+      <p>Puoi modificare la tua preferenza cookie in qualsiasi momento:</p>
+      <div class="cookie-pref-btns">
+        <button class="cookie-pref-btn cookie-pref-btn--accept" id="cp-accept">Accetta cookie</button>
+        <button class="cookie-pref-btn cookie-pref-btn--reject" id="cp-reject">Rifiuta non essenziali</button>
+      </div>
+      <p class="cookie-status" id="cp-status"></p>
+    </div>
+
+    <div class="legal-section">
+      <h2>6. Come disabilitare i cookie dal browser</h2>
+      <p>Puoi gestire, bloccare o eliminare i cookie direttamente dalle impostazioni del tuo browser. Di seguito le guide ufficiali:</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+        <li><a href="https://support.mozilla.org/kb/delete-cookies-remove-info-websites-stored" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+        <li><a href="https://support.apple.com/guide/safari/sfri11471" target="_blank" rel="noopener">Apple Safari</a></li>
+        <li><a href="https://support.microsoft.com/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank" rel="noopener">Microsoft Edge</a></li>
+      </ul>
+      <p>La disabilitazione dei cookie tecnici potrebbe compromettere il corretto funzionamento del sito.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>7. Modifiche alla Cookie Policy</h2>
+      <p>Il Titolare si riserva il diritto di aggiornare la presente policy. Le modifiche saranno pubblicate su questa pagina con indicazione della data di aggiornamento.</p>
+      <p>Per qualsiasi domanda sui cookie utilizzati, contattare il Titolare tramite <a href="https://wa.me/393935896994" target="_blank" rel="noopener">WhatsApp</a>.</p>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <p>© 2026 Giorgia Piras · Tutti i diritti riservati</p>
+    <nav class="legal-footer-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="termini.html">Termini</a>
+      <a href="cookie.html">Cookie</a>
+    </nav>
+  </footer>
+
+  <script>
+    (function () {
+      const acceptBtn = document.getElementById('cp-accept');
+      const rejectBtn = document.getElementById('cp-reject');
+      const status    = document.getElementById('cp-status');
+      const current   = localStorage.getItem('cookieConsent');
+      if (current) status.textContent = current === 'accepted' ? '✓ Preferenza attuale: hai accettato i cookie.' : '✓ Preferenza attuale: hai rifiutato i cookie non essenziali.';
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        status.textContent = '✓ Preferenza salvata: cookie accettati.';
+      });
+      rejectBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'rejected');
+        status.textContent = '✓ Preferenza salvata: cookie non essenziali rifiutati.';
+      });
+    }());
+  </script>
+
+</body>
+</html>
