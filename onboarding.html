@@ -193,6 +193,48 @@
     .q-extra { margin-top: 4px; margin-bottom: 28px; }
     .q-extra.hidden { display: none; }
 
+    /* Chips (multi-select) */
+    .q-chips-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .q-chip-group { margin-bottom: 24px; }
+    .q-chip-group-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--subtle); margin-bottom: 12px; display: block; }
+    .q-chip {
+      padding: 9px 18px; border-radius: 100px; font-size: 13px; font-weight: 500;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      transition: all 0.2s; cursor: pointer;
+    }
+    .q-chip:hover { border-color: var(--blue-border); color: var(--white); }
+    .q-chip.active { border-color: var(--blue); color: var(--blue); background: var(--blue-dim); }
+
+    /* WA Card */
+    .q-wa-card {
+      background: var(--surface); border: 1px solid rgba(37,211,102,0.2);
+      border-radius: 10px; padding: 16px 18px; margin-bottom: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .q-wa-card.hidden { display: none; }
+    .q-wa-card-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .q-wa-card-text strong { color: rgba(255,255,255,0.75); }
+
+    /* Extra inputs (Other / Drive) */
+    .q-other-wrap, .q-drive-wrap { margin-bottom: 20px; }
+    .q-other-wrap.hidden, .q-drive-wrap.hidden { display: none; }
+    .q-other-input, .q-drive-input {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--white);
+      font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s;
+    }
+    .q-other-input:focus, .q-drive-input:focus { border-color: var(--blue); }
+    .q-other-input::placeholder, .q-drive-input::placeholder { color: var(--subtle); }
+
+    /* Skip */
+    .btn-skip {
+      background: transparent; color: var(--subtle); font-size: 12px;
+      padding: 8px 0; display: block; width: 100%; text-align: center;
+      margin-top: 8px; letter-spacing: 0.3px; transition: color 0.2s;
+    }
+    .btn-skip:hover { color: var(--muted); }
+    .btn-skip.hidden { display: none; }
+
     /* Navigation */
     .q-nav { display: flex; justify-content: space-between; align-items: center; }
     .btn-back {
@@ -309,7 +351,7 @@
             <span class="w-stat-label">siti PT analizzati</span>
           </div>
           <div class="w-stat">
-            <span class="w-stat-num">9</span>
+            <span class="w-stat-num">11</span>
             <span class="w-stat-label">sezioni ottimizzate</span>
           </div>
           <div class="w-stat">
@@ -358,34 +400,54 @@
           <div class="w-step"><span class="w-step-dot"></span>Il tuo tocco personale sul design</div>
         </div>
 
-        <button class="btn-primary" id="btn-start">Iniziamo — 9 domande →</button>
+        <button class="btn-primary" id="btn-start">Iniziamo — 11 domande →</button>
       </div>
     </div>
 
-    <!-- ── STATI 1–9: DOMANDE ── -->
+    <!-- ── STATI 1–11: DOMANDE ── -->
     <div class="screen hidden" id="screen-question">
       <div class="screen-inner">
-        <span class="q-step-label" id="q-step-label">Domanda 1 di 9</span>
+        <span class="q-step-label" id="q-step-label">Domanda 1 di 11</span>
         <h2 class="q-title" id="q-title"></h2>
         <p class="q-hint" id="q-hint"></p>
 
-        <!-- Input testo breve (domande 1, 7) -->
-        <input type="text" class="q-input" id="q-input" placeholder="">
+        <!-- Chips (chips-multi) -->
+        <div id="q-chips" class="q-chips-container" style="display:none"></div>
 
-        <!-- Textarea (domande 2, 3, 4, 5, 8, 9) -->
-        <textarea class="q-textarea" id="q-textarea" placeholder=""></textarea>
-
-        <!-- Pills Sì/No (domanda 6) -->
-        <div class="q-pills" id="q-pills">
-          <button class="q-pill" data-val="si" onclick="selectPill(this)">Sì, voglio mostrarli</button>
-          <button class="q-pill" data-val="no" onclick="selectPill(this)">No, solo "Contattami"</button>
+        <!-- Other field for chips -->
+        <div class="q-other-wrap hidden" id="q-other-wrap">
+          <input type="text" class="q-other-input" id="q-other-input" placeholder="Altro — scrivi qui...">
         </div>
-        <textarea class="q-textarea q-extra hidden" id="q-extra" placeholder="Es. Personal Training 1:1 — 60€/ora · Pacchetto 10 sessioni — 500€ · Coaching online — 150€/mese"></textarea>
+
+        <!-- Drive link field -->
+        <div class="q-drive-wrap hidden" id="q-drive-wrap">
+          <input type="text" class="q-drive-input" id="q-drive-input" placeholder="Link Google Drive (es. https://drive.google.com/...)">
+        </div>
+
+        <!-- Input testo breve -->
+        <input type="text" class="q-input" id="q-input" placeholder="" style="display:none">
+
+        <!-- Textarea -->
+        <textarea class="q-textarea" id="q-textarea" placeholder="" style="display:none"></textarea>
+
+        <!-- Pills Sì/No -->
+        <div class="q-pills" id="q-pills" style="display:none"></div>
+        <textarea class="q-textarea q-extra hidden" id="q-extra" placeholder=""></textarea>
+
+        <!-- WA Card -->
+        <div class="q-wa-card hidden" id="q-wa-card">
+          <p class="q-wa-card-text" id="q-wa-text">Mandaci il materiale su WhatsApp — è più facile così!</p>
+          <a class="btn-wa" id="q-wa-btn" href="#" target="_blank" rel="noopener">
+            💬 Apri WhatsApp
+          </a>
+          <input type="text" class="q-other-input" id="q-wa-input" placeholder="Oppure scrivi qui il link..." style="display:none">
+        </div>
 
         <div class="q-nav">
           <button class="btn-back" id="btn-back">← Indietro</button>
           <button class="btn-next" id="btn-next">Avanti →</button>
         </div>
+        <button class="btn-skip hidden" id="btn-skip">Salta per ora →</button>
       </div>
     </div>
 
@@ -453,84 +515,130 @@
     const QUESTIONS = [
       {
         id: 1,
-        title: 'Come ti chiami e dove operi?',
-        hint: 'Conferma il tuo nome completo, la città e se lavori in presenza, online o entrambi.',
-        type: 'input',
-        placeholder: 'Es. Giorgia Piras · Roma · Presenza + Online',
-        key: 'q1'
+        title: 'Come vuoi che le persone si sentano visitando il tuo sito?',
+        hint: 'Scegli le parole che descrivono come vuoi essere percepita.',
+        type: 'chips-multi',
+        key: 'q1',
+        required: true,
+        options: ['Motivante', 'Professionale', 'Affidabile', 'Seria', 'Vicina alle persone', 'Esclusiva']
       },
       {
         id: 2,
+        title: 'Quali servizi offri?',
+        hint: 'Seleziona tutto ciò che proponi ai tuoi clienti.',
+        type: 'chips-multi',
+        key: 'q2',
+        required: true,
+        options: ['Personal Training 1:1 Roma', 'Coaching Online', 'Piani di Allenamento', 'Videocall', 'Community', 'Corsi Digitali'],
+        hasOther: true
+      },
+      {
+        id: 3,
+        title: 'Chi è la tua cliente ideale?',
+        hint: 'Seleziona fascia d\'età e obiettivi principali.',
+        type: 'chips-multi',
+        key: 'q3',
+        required: true,
+        groups: [
+          { label: 'Fascia d\'età', options: ['18–25', '25–35', '35–45', '45+'] },
+          { label: 'Obiettivi', options: ['Dimagrire', 'Tonificare', 'Massa muscolare', 'Benessere generale', 'Post-gravidanza', 'Tornare in forma dopo uno stop'] }
+        ]
+      },
+      {
+        id: 4,
+        title: 'Vuoi mostrare i prezzi sul sito?',
+        hint: 'Se sì, inserisci i tuoi pacchetti e tariffe. Se no, mettiamo solo "Contattami per un preventivo".',
+        type: 'pills',
+        pillOptions: [
+          { val: 'si', label: 'Sì, voglio mostrarli' },
+          { val: 'no', label: 'No, solo "Contattami"' }
+        ],
+        extraPlaceholder: 'Es. Personal Training 1:1 — 60€/ora · Pacchetto 10 sessioni — 500€',
+        key: 'q4',
+        required: true
+      },
+      {
+        id: 5,
         title: 'Raccontaci la tua storia come trainer.',
         hint: 'Come hai iniziato? Cosa ti ha spinto? Perché ami questo lavoro? 3–5 frasi vanno benissimo.',
         type: 'textarea',
         placeholder: 'Es. Ho iniziato nel 2018 dopo aver vissuto in prima persona la trasformazione che porta l\'allenamento...',
-        key: 'q2'
+        key: 'q5',
+        required: true
       },
       {
-        id: 3,
+        id: 6,
         title: 'Cosa ti rende diversa dagli altri trainer?',
         hint: 'Il tuo approccio unico, la tua filosofia, quello che non troveresti da nessun altro professionista.',
         type: 'textarea',
         placeholder: 'Es. Non mi fermo ai numeri sulla bilancia. Lavoro sulla testa oltre che sul corpo...',
-        key: 'q3'
-      },
-      {
-        id: 4,
-        title: 'Chi è il tuo cliente ideale?',
-        hint: 'Età, obiettivi, tipo di persona. Chi vuoi attirare con il sito?',
-        type: 'textarea',
-        placeholder: 'Es. Donne tra 25 e 45 anni che vogliono dimagrire ma hanno già fallito con le diete classiche...',
-        key: 'q4'
-      },
-      {
-        id: 5,
-        title: 'Hai 2–3 testimonianze di clienti soddisfatti?',
-        hint: 'Nome (anche solo nome di battesimo), risultato ottenuto e una frase che descrive l\'esperienza con te. Le foto le mandi su WhatsApp dopo.',
-        type: 'textarea',
-        placeholder: 'Es.\nMaria, 34 anni — "Ho perso 8kg in 3 mesi senza mai sentirmi a dieta"\nLuca, 28 anni — "Finalmente capivo come allenarmi davvero..."',
-        key: 'q5'
-      },
-      {
-        id: 6,
-        title: 'Vuoi mostrare i prezzi sul sito?',
-        hint: 'Se sì, indicaci i tuoi pacchetti e tariffe. Se no, mettiamo solo "Contattami per un preventivo".',
-        type: 'pills',
-        key: 'q6'
+        key: 'q6',
+        required: true
       },
       {
         id: 7,
-        title: 'Hai foto prima/dopo da mostrare?',
-        hint: 'Le foto ce le mandi su WhatsApp quando sei pronta. Scrivi qui solo una nota.',
-        type: 'input',
-        placeholder: 'Es. "Sì, ho 2 set · devo chiedere consenso al cliente" oppure "Non ancora"',
-        key: 'q7'
+        title: 'Hai testimonianze o materiali dei clienti?',
+        hint: 'Seleziona cosa hai disponibile. Le foto/video ce le mandi su WhatsApp.',
+        type: 'chips-multi',
+        key: 'q7',
+        required: false,
+        options: ['Sì, ho testimonianze scritte', 'Sì, ho foto prima/dopo', 'Ho video di clienti', 'Ho tutto su Drive — te lo mando', 'Non ancora'],
+        hasDrive: true,
+        waText: 'Quando sei pronta, mandaci foto e video direttamente su WhatsApp!'
       },
       {
         id: 8,
-        title: 'C\'è qualcosa nel sito attuale che non ti rappresenta?',
-        hint: 'Tono, colori, parole usate, sezioni, immagini... Nulla è definitivo. Questo è il momento di dirlo.',
-        type: 'textarea',
-        placeholder: 'Es. Il tono è un po\' troppo aggressivo per i miei gusti · Vorrei più foto mie · La sezione X non mi convince...',
-        key: 'q8'
+        title: 'Hai già un logo o colori del brand?',
+        hint: 'Se sì, mandaceli su WhatsApp — è più facile così.',
+        type: 'pills',
+        pillOptions: [
+          { val: 'si', label: 'Sì, ce l\'ho' },
+          { val: 'no', label: 'No, non ancora' }
+        ],
+        key: 'q8',
+        required: false,
+        waOnYes: true
       },
       {
         id: 9,
-        title: 'C\'è qualcosa che vorresti aggiungere che ancora non c\'è?',
-        hint: 'Una sezione FAQ, una gallery, un blog, una pagina "Chi sono" dedicata, un calendario... qualsiasi idea va benissimo.',
-        type: 'textarea',
-        placeholder: 'Es. Vorrei una sezione con le domande frequenti · Un form di contatto diretto · Una gallery con foto del mio studio...',
-        key: 'q9'
+        title: 'C\'è un sito che ti piace esteticamente?',
+        hint: 'Non deve essere un sito fitness — qualsiasi sito che ti piace visivamente va benissimo.',
+        type: 'wa-card',
+        key: 'q9',
+        required: false,
+        waText: 'Mandaci il link o uno screenshot su WhatsApp — è più facile così!',
+        placeholder: 'Oppure scrivi qui il link: es. https://...'
+      },
+      {
+        id: 10,
+        title: 'Cosa NON vuoi vedere nel sito?',
+        hint: 'Aiutaci a evitare tutto ciò che non ti rappresenta.',
+        type: 'chips-multi',
+        key: 'q10',
+        required: false,
+        options: ['Linguaggio aggressivo', 'Troppi colori', 'Look da palestra', 'Immagini stock', 'Testo molto lungo', 'Font decorativi'],
+        hasOther: true
+      },
+      {
+        id: 11,
+        title: 'Come ti vedi tra 2 anni?',
+        hint: 'Aiutaci a costruire il sito pensando al tuo futuro, non solo al presente.',
+        type: 'chips-multi',
+        key: 'q11',
+        required: false,
+        options: ['Brand online riconosciuto', 'Corsi o programmi digitali', 'Community online', 'Più clienti in presenza', 'Collaborazioni con brand fitness']
       }
     ];
 
     /* ═══════════════════════════════════════════════════════
        STATE
     ═══════════════════════════════════════════════════════ */
-    let currentStep = 0;   // 0 = welcome, 1–9 = domande, 10 = invio, 11 = grazie
+    const TOTAL_Q = QUESTIONS.length; // 11
+    let currentStep = 0;   // 0 = welcome, 1–11 = domande, 12 = invio, 13 = grazie
     let currentScreen = document.getElementById('screen-welcome');
     const answers = {};
-    let pillValue = '';
+    const chipSelections = {}; // key → Set of selected strings
+    let pillValues = {};       // key → 'si'|'no'
 
     /* ═══════════════════════════════════════════════════════
        INIT
@@ -559,6 +667,7 @@
       document.getElementById('btn-start').addEventListener('click', () => goToStep(1));
       document.getElementById('btn-next').addEventListener('click', handleNext);
       document.getElementById('btn-back').addEventListener('click', handleBack);
+      document.getElementById('btn-skip').addEventListener('click', handleSkip);
     }());
 
     /* ═══════════════════════════════════════════════════════
@@ -571,12 +680,12 @@
       currentScreen = nextScreen;
       updateProgress();
 
-      if (step >= 1 && step <= 9) renderQuestion(step);
+      if (step >= 1 && step <= TOTAL_Q) renderQuestion(step);
     }
 
     function handleNext() {
       saveAnswer(currentStep);
-      if (currentStep === 9) {
+      if (currentStep === TOTAL_Q) {
         submitAnswers();
       } else {
         goToStep(currentStep + 1, 'forward');
@@ -591,11 +700,20 @@
       }
     }
 
+    function handleSkip() {
+      // Skip: don't save, just advance
+      if (currentStep === TOTAL_Q) {
+        submitAnswers();
+      } else {
+        goToStep(currentStep + 1, 'forward');
+      }
+    }
+
     function getScreenForStep(step) {
       if (step === 0)  return document.getElementById('screen-welcome');
-      if (step <= 9)   return document.getElementById('screen-question');
-      if (step === 10) return document.getElementById('screen-sending');
-      if (step === 11) return document.getElementById('screen-done');
+      if (step <= TOTAL_Q) return document.getElementById('screen-question');
+      if (step === TOTAL_Q + 1) return document.getElementById('screen-sending');
+      if (step === TOTAL_Q + 2) return document.getElementById('screen-done');
       return document.getElementById('screen-error');
     }
 
@@ -645,7 +763,7 @@
        PROGRESS BAR
     ═══════════════════════════════════════════════════════ */
     function updateProgress() {
-      const pct = currentStep === 0 ? 0 : Math.round((currentStep / 9) * 100);
+      const pct = currentStep === 0 ? 0 : Math.round((currentStep / TOTAL_Q) * 100);
       document.getElementById('progress-fill').style.width = pct + '%';
     }
 
@@ -655,63 +773,192 @@
     function renderQuestion(step) {
       const q = QUESTIONS[step - 1];
 
-      document.getElementById('q-step-label').textContent = `Domanda ${step} di 9`;
+      document.getElementById('q-step-label').textContent = `Domanda ${step} di ${TOTAL_Q}`;
       document.getElementById('q-title').textContent = q.title;
       document.getElementById('q-hint').textContent  = q.hint;
 
-      const input    = document.getElementById('q-input');
-      const textarea = document.getElementById('q-textarea');
-      const pills    = document.getElementById('q-pills');
-      const extra    = document.getElementById('q-extra');
-      const btnNext  = document.getElementById('btn-next');
+      const elChips     = document.getElementById('q-chips');
+      const elOtherWrap = document.getElementById('q-other-wrap');
+      const elOtherIn   = document.getElementById('q-other-input');
+      const elDriveWrap = document.getElementById('q-drive-wrap');
+      const elDriveIn   = document.getElementById('q-drive-input');
+      const elInput     = document.getElementById('q-input');
+      const elTextarea  = document.getElementById('q-textarea');
+      const elPills     = document.getElementById('q-pills');
+      const elExtra     = document.getElementById('q-extra');
+      const elWaCard    = document.getElementById('q-wa-card');
+      const elWaText    = document.getElementById('q-wa-text');
+      const elWaBtn     = document.getElementById('q-wa-btn');
+      const elWaInput   = document.getElementById('q-wa-input');
+      const btnNext     = document.getElementById('btn-next');
+      const btnSkip     = document.getElementById('btn-skip');
 
-      // Hide all first
-      input.style.display    = 'none';
-      textarea.style.display = 'none';
-      pills.style.display    = 'none';
-      extra.classList.add('hidden');
+      // Hide everything
+      elChips.style.display   = 'none';
+      elOtherWrap.classList.add('hidden');
+      elDriveWrap.classList.add('hidden');
+      elInput.style.display   = 'none';
+      elTextarea.style.display = 'none';
+      elPills.style.display   = 'none';
+      elExtra.classList.add('hidden');
+      elWaCard.classList.add('hidden');
+      elWaInput.style.display = 'none';
 
-      if (q.type === 'input') {
-        input.style.display    = 'block';
-        input.placeholder      = q.placeholder || '';
-        input.value            = answers[q.key] || '';
-        setTimeout(() => input.focus(), 320);
+      // Skip button visibility
+      btnSkip.classList.toggle('hidden', q.required !== false);
+
+      btnNext.textContent = step === TOTAL_Q ? 'Invia le mie risposte ✓' : 'Avanti →';
+
+      if (q.type === 'chips-multi') {
+        elChips.style.display = 'flex';
+        // Init selection set
+        if (!chipSelections[q.key]) chipSelections[q.key] = new Set();
+        const sel = chipSelections[q.key];
+
+        elChips.innerHTML = '';
+
+        const renderGroup = (options) => {
+          options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'q-chip' + (sel.has(opt) ? ' active' : '');
+            btn.textContent = (sel.has(opt) ? '✓ ' : '') + opt;
+            btn.addEventListener('click', () => {
+              if (sel.has(opt)) {
+                sel.delete(opt);
+                btn.classList.remove('active');
+                btn.textContent = opt;
+              } else {
+                sel.add(opt);
+                btn.classList.add('active');
+                btn.textContent = '✓ ' + opt;
+              }
+              // Drive reveal for Q7
+              if (q.hasDrive) {
+                const driveSelected = sel.has('Ho tutto su Drive — te lo mando');
+                elDriveWrap.classList.toggle('hidden', !driveSelected);
+              }
+            });
+            elChips.appendChild(btn);
+          });
+        };
+
+        if (q.groups) {
+          q.groups.forEach(group => {
+            const groupEl = document.createElement('div');
+            groupEl.className = 'q-chip-group';
+            const label = document.createElement('span');
+            label.className = 'q-chip-group-label';
+            label.textContent = group.label;
+            groupEl.appendChild(label);
+            const wrap = document.createElement('div');
+            wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px';
+            group.options.forEach(opt => {
+              const btn = document.createElement('button');
+              btn.className = 'q-chip' + (sel.has(opt) ? ' active' : '');
+              btn.textContent = (sel.has(opt) ? '✓ ' : '') + opt;
+              btn.addEventListener('click', () => {
+                if (sel.has(opt)) {
+                  sel.delete(opt);
+                  btn.classList.remove('active');
+                  btn.textContent = opt;
+                } else {
+                  sel.add(opt);
+                  btn.classList.add('active');
+                  btn.textContent = '✓ ' + opt;
+                }
+              });
+              wrap.appendChild(btn);
+            });
+            groupEl.appendChild(wrap);
+            elChips.appendChild(groupEl);
+          });
+        } else {
+          renderGroup(q.options);
+        }
+
+        // "Altro" field
+        if (q.hasOther) {
+          elOtherWrap.classList.remove('hidden');
+          elOtherIn.value = answers[q.key + '_other'] || '';
+        }
+
+        // Drive field for Q7
+        if (q.hasDrive) {
+          const driveSelected = sel.has('Ho tutto su Drive — te lo mando');
+          if (driveSelected) elDriveWrap.classList.remove('hidden');
+          elDriveIn.value = answers[q.key + '_drive'] || '';
+        }
+
+        // WA card for Q7
+        if (q.waText) {
+          elWaCard.classList.remove('hidden');
+          elWaText.textContent = q.waText;
+          elWaBtn.href = WA_FALLBACK;
+          elWaInput.style.display = 'none';
+        }
 
       } else if (q.type === 'textarea') {
-        textarea.style.display = 'block';
-        textarea.placeholder   = q.placeholder || '';
-        textarea.value         = answers[q.key + '_text'] || answers[q.key] || '';
-        setTimeout(() => textarea.focus(), 320);
+        elTextarea.style.display = 'block';
+        elTextarea.placeholder   = q.placeholder || '';
+        elTextarea.value         = answers[q.key] || '';
+        setTimeout(() => elTextarea.focus(), 320);
 
       } else if (q.type === 'pills') {
-        pills.style.display    = 'flex';
-        pillValue = answers['q6_yn'] || '';
-        // Restore pill state
-        document.querySelectorAll('.q-pill').forEach(p => {
-          p.classList.toggle('active', p.dataset.val === pillValue);
+        elPills.style.display = 'flex';
+        const pv = pillValues[q.key] || '';
+
+        // Build pills dynamically
+        elPills.innerHTML = '';
+        (q.pillOptions || []).forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'q-pill' + (pv === opt.val ? ' active' : '');
+          btn.dataset.val = opt.val;
+          btn.textContent = opt.label;
+          btn.addEventListener('click', () => {
+            elPills.querySelectorAll('.q-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            pillValues[q.key] = opt.val;
+            // Conditional reveals
+            if (opt.val === 'si') {
+              if (q.extraPlaceholder) {
+                elExtra.classList.remove('hidden');
+                elExtra.placeholder = q.extraPlaceholder;
+                elExtra.value = answers[q.key + '_detail'] || '';
+              }
+              if (q.waOnYes) {
+                elWaCard.classList.remove('hidden');
+                elWaText.innerHTML = 'Mandaci <strong>logo e colori</strong> su WhatsApp — è più facile così!';
+                elWaBtn.href = WA_FALLBACK;
+              }
+            } else {
+              elExtra.classList.add('hidden');
+              if (q.waOnYes) elWaCard.classList.add('hidden');
+            }
+          });
+          elPills.appendChild(btn);
         });
-        if (pillValue === 'si') {
-          extra.classList.remove('hidden');
-          extra.value = answers['q6_detail'] || '';
+
+        // Restore state
+        if (pv === 'si') {
+          if (q.extraPlaceholder) {
+            elExtra.classList.remove('hidden');
+            elExtra.placeholder = q.extraPlaceholder;
+            elExtra.value = answers[q.key + '_detail'] || '';
+          }
+          if (q.waOnYes) {
+            elWaCard.classList.remove('hidden');
+            elWaText.innerHTML = 'Mandaci <strong>logo e colori</strong> su WhatsApp — è più facile così!';
+            elWaBtn.href = WA_FALLBACK;
+          }
         }
-      }
 
-      btnNext.textContent = step === 9 ? 'Invia le mie risposte ✓' : 'Avanti →';
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       PILLS (domanda 6)
-    ═══════════════════════════════════════════════════════ */
-    function selectPill(btn) {
-      document.querySelectorAll('.q-pill').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      pillValue = btn.dataset.val;
-      const extra = document.getElementById('q-extra');
-      if (pillValue === 'si') {
-        extra.classList.remove('hidden');
-        setTimeout(() => extra.focus(), 50);
-      } else {
-        extra.classList.add('hidden');
+      } else if (q.type === 'wa-card') {
+        elWaCard.classList.remove('hidden');
+        elWaText.textContent = q.waText || '';
+        elWaBtn.href = WA_FALLBACK;
+        elWaInput.style.display = 'block';
+        elWaInput.placeholder   = q.placeholder || '';
+        elWaInput.value         = answers[q.key] || '';
       }
     }
 
@@ -719,16 +966,33 @@
        SAVE ANSWER
     ═══════════════════════════════════════════════════════ */
     function saveAnswer(step) {
-      if (step < 1 || step > 9) return;
+      if (step < 1 || step > TOTAL_Q) return;
       const q = QUESTIONS[step - 1];
 
       if (q.type === 'input') {
         answers[q.key] = document.getElementById('q-input').value.trim();
+
       } else if (q.type === 'textarea') {
         answers[q.key] = document.getElementById('q-textarea').value.trim();
+
+      } else if (q.type === 'chips-multi') {
+        const sel = chipSelections[q.key] || new Set();
+        answers[q.key] = Array.from(sel).join(', ');
+        if (q.hasOther) {
+          answers[q.key + '_other'] = document.getElementById('q-other-input').value.trim();
+        }
+        if (q.hasDrive) {
+          answers[q.key + '_drive'] = document.getElementById('q-drive-input').value.trim();
+        }
+
       } else if (q.type === 'pills') {
-        answers['q6_yn']     = pillValue;
-        answers['q6_detail'] = document.getElementById('q-extra').value.trim();
+        answers[q.key + '_yn'] = pillValues[q.key] || '';
+        if (q.extraPlaceholder) {
+          answers[q.key + '_detail'] = document.getElementById('q-extra').value.trim();
+        }
+
+      } else if (q.type === 'wa-card') {
+        answers[q.key] = document.getElementById('q-wa-input').value.trim();
       }
     }
 
@@ -736,20 +1000,32 @@
        SUBMIT
     ═══════════════════════════════════════════════════════ */
     async function submitAnswers() {
-      saveAnswer(9);
-      goToStep(10, 'forward');
+      saveAnswer(TOTAL_Q);
+      goToStep(TOTAL_Q + 1, 'forward');
 
       const payload = {
-        q1: answers.q1 || '',
-        q2: answers.q2 || '',
-        q3: answers.q3 || '',
-        q4: answers.q4 || '',
-        q5: answers.q5 || '',
-        q6_yn:     answers.q6_yn     || '',
-        q6_detail: answers.q6_detail || '',
-        q7: answers.q7 || '',
-        q8: answers.q8 || '',
-        q9: answers.q9 || '',
+        // Q1–Q3: chips-multi
+        q1_percezione:    answers.q1  || '',
+        q2_servizi:       answers.q2  || '',
+        q2_altro:         answers.q2_other || '',
+        q3_cliente:       answers.q3  || '',
+        // Q4: prezzi (pills)
+        q4_prezzi_yn:     answers.q4_yn     || '',
+        q4_prezzi_detail: answers.q4_detail || '',
+        // Q5–Q6: testo libero
+        q5_storia:        answers.q5  || '',
+        q6_differenza:    answers.q6  || '',
+        // Q7: materiali
+        q7_materiali:     answers.q7  || '',
+        q7_drive:         answers.q7_drive || '',
+        // Q8: logo (pills + WA)
+        q8_logo_yn:       answers.q8_yn || '',
+        // Q9: ispirazione (wa-card)
+        q9_ispirazione:   answers.q9  || '',
+        // Q10–Q11: chips-multi
+        q10_no:           answers.q10 || '',
+        q10_altro:        answers.q10_other || '',
+        q11_visione:      answers.q11 || '',
         client: CLIENT_NAME,
         submitted_at: new Date().toISOString()
       };
@@ -763,7 +1039,7 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
         if (json.status !== 'ok') throw new Error('Script error');
-        goToStep(11, 'forward');
+        goToStep(TOTAL_Q + 2, 'forward');
       } catch (err) {
         console.error('Submit error:', err);
         goToStep('err', 'forward');
@@ -776,7 +1052,7 @@
     document.addEventListener('keydown', e => {
       if (currentStep === 0 && e.key === 'Enter') {
         goToStep(1);
-      } else if (currentStep >= 1 && currentStep <= 9) {
+      } else if (currentStep >= 1 && currentStep <= TOTAL_Q) {
         const active = document.activeElement;
         const isTextarea = active && active.tagName === 'TEXTAREA';
         if (e.key === 'Enter' && !isTextarea) {
@@ -788,44 +1064,42 @@
 
   <!--
   ═══════════════════════════════════════════════════════════
-  📋 SETUP GOOGLE APPS SCRIPT — istruzioni per il developer
+  📋 SETUP GOOGLE APPS SCRIPT — aggiorna il codice GAS
   ═══════════════════════════════════════════════════════════
 
-  1. Vai su https://sheets.google.com → crea un nuovo foglio
-     Aggiungi intestazioni in riga 1:
-     Timestamp | Nome/Città | Storia | Differenziazione | Cliente Ideale |
-     Testimonianze | Prezzi Y/N | Dettaglio Prezzi | Nota Foto |
-     Feedback Design | Aggiunte
+  Colonne Sheet (riga 1 intestazioni):
+  Timestamp | Percezione | Servizi | Servizi-Altro | Cliente |
+  Prezzi Y/N | Prezzi Dettaglio | Storia | Differenziazione |
+  Materiali | Drive | Logo Y/N | Ispirazione | Cosa NON vuole |
+  Cosa NON vuole-Altro | Visione 2 anni | Client | Submitted At
 
-  2. Estensioni → Apps Script → incolla questo codice:
+  Nuovo codice GAS (sostituisci il vecchio):
 
      function doPost(e) {
        var data = JSON.parse(e.postData.contents);
        var sheet = SpreadsheetApp.getActiveSheet();
        sheet.appendRow([
          new Date(),
-         data.q1, data.q2, data.q3, data.q4, data.q5,
-         data.q6_yn, data.q6_detail,
-         data.q7, data.q8, data.q9
+         data.q1_percezione,
+         data.q2_servizi, data.q2_altro,
+         data.q3_cliente,
+         data.q4_prezzi_yn, data.q4_prezzi_detail,
+         data.q5_storia,
+         data.q6_differenza,
+         data.q7_materiali, data.q7_drive,
+         data.q8_logo_yn,
+         data.q9_ispirazione,
+         data.q10_no, data.q10_altro,
+         data.q11_visione,
+         data.client, data.submitted_at
        ]);
        return ContentService
          .createTextOutput(JSON.stringify({ status: 'ok' }))
          .setMimeType(ContentService.MimeType.JSON);
      }
 
-  3. Deploy → New deployment → Web App
-     - Execute as: Me
-     - Who has access: Anyone
-     → Copia l'URL del deployment
-
-  4. Incolla l'URL nella costante SCRIPT_URL in cima a questo file.
-
-  5. Inserisci i 2 URL competitor in COMPETITOR_1 e COMPETITOR_2.
-
-  6. Testa aprendo onboarding.html in locale → compila → verifica la riga nel Sheet.
-
-  7. Fai git push → manda a Giorgia il link:
-     https://rodrigoapr01.github.io/giorgia-piras/onboarding.html
+  Dopo aver aggiornato il codice:
+  → Deploy → Manage deployments → Edit (matita) → New version → Deploy
   ═══════════════════════════════════════════════════════════
   -->
 
