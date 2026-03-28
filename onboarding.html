@@ -46,7 +46,7 @@
     .t-logo {
       font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--white);
     }
-    .t-logo span { color: var(--blue); }
+    .t-logo span { color: var(--white); }
     .t-project { font-size: 10px; color: var(--subtle); letter-spacing: 1.5px; text-transform: uppercase; }
 
     /* ═══════════════════════════════════════
@@ -321,21 +321,21 @@
         <!-- Comparison -->
         <span class="w-comp-label">Cosa abbiamo trovato nel mercato</span>
         <div class="w-comp-grid">
-          <div class="w-comp-item bad">
+          <a class="w-comp-item bad" id="comp-link-1" href="#" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
             <img class="w-comp-screenshot" id="comp-img-1" src="" alt="Competitor 1" loading="lazy">
             <div class="w-comp-badge bad">✗</div>
             <div class="w-comp-footer" id="comp-label-1">competitor 1</div>
-          </div>
-          <div class="w-comp-item bad">
+          </a>
+          <a class="w-comp-item bad" id="comp-link-2" href="#" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
             <img class="w-comp-screenshot" id="comp-img-2" src="" alt="Competitor 2" loading="lazy">
             <div class="w-comp-badge bad">✗</div>
             <div class="w-comp-footer" id="comp-label-2">competitor 2</div>
-          </div>
-          <div class="w-comp-item good">
+          </a>
+          <a class="w-comp-item good" href="https://rodrigoapr01.github.io/giorgia-piras/" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
             <img class="w-comp-screenshot" id="comp-img-giorgia" src="" alt="giorgiapiras.it" loading="lazy">
             <div class="w-comp-badge good">✓</div>
             <div class="w-comp-footer">giorgiapiras.it ✦</div>
-          </div>
+          </a>
         </div>
 
         <!-- Issues -->
@@ -552,6 +552,8 @@
       document.getElementById('comp-img-giorgia').src   = microlink(GIORGIA_URL);
       document.getElementById('comp-label-1').textContent = hostname(COMPETITOR_1);
       document.getElementById('comp-label-2').textContent = hostname(COMPETITOR_2);
+      document.getElementById('comp-link-1').href = COMPETITOR_1;
+      document.getElementById('comp-link-2').href = COMPETITOR_2;
 
       // Event listeners
       document.getElementById('btn-start').addEventListener('click', () => goToStep(1));
