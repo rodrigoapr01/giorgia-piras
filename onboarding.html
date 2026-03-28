@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Il tuo progetto — Giorgia Piras × Transiva</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN SYSTEM — TRANSIVA 3.0
+    ═══════════════════════════════════════ */
+    :root {
+      --black:   #000000;
+      --blue:    #2563EB;
+      --blue-dim: rgba(37,99,235,0.12);
+      --blue-border: rgba(37,99,235,0.3);
+      --white:   #ffffff;
+      --muted:   #666666;
+      --subtle:  #333333;
+      --border:  #1a1a1a;
+      --surface: #080808;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    button { font-family: 'Inter', sans-serif; cursor: pointer; border: none; }
+
+    /* ═══════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════ */
+    .t-header {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px clamp(20px, 5vw, 48px);
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .t-logo {
+      font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--white);
+    }
+    .t-logo span { color: var(--blue); }
+    .t-project { font-size: 10px; color: var(--subtle); letter-spacing: 1.5px; text-transform: uppercase; }
+
+    /* ═══════════════════════════════════════
+       PROGRESS BAR
+    ═══════════════════════════════════════ */
+    .t-progress-wrap { height: 2px; background: var(--border); }
+    .t-progress-fill {
+      height: 100%; background: var(--blue);
+      width: 0%; transition: width 0.4s ease;
+    }
+
+    /* ═══════════════════════════════════════
+       APP CONTAINER
+    ═══════════════════════════════════════ */
+    #app {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════
+       SCREENS
+    ═══════════════════════════════════════ */
+    .screen {
+      position: absolute; inset: 0;
+      overflow-y: auto;
+      padding: clamp(40px, 7vw, 72px) clamp(20px, 5vw, 48px) 80px;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .screen.hidden {
+      opacity: 0; transform: translateX(40px);
+      pointer-events: none;
+    }
+    .screen.exit {
+      opacity: 0; transform: translateX(-40px);
+      pointer-events: none;
+    }
+    .screen-inner { max-width: 600px; margin: 0 auto; }
+
+    /* ═══════════════════════════════════════
+       WELCOME SCREEN
+    ═══════════════════════════════════════ */
+    .w-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 14px; }
+    .w-title { font-size: clamp(26px, 5vw, 38px); font-weight: 700; line-height: 1.15; margin-bottom: 8px; }
+    .w-title em { color: var(--blue); font-style: normal; }
+    .w-sub { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 32px; }
+
+    /* Stats */
+    .w-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      margin-bottom: 32px;
+    }
+    .w-stat {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 16px 12px; text-align: center;
+    }
+    .w-stat-num { display: block; font-size: 24px; font-weight: 700; color: var(--blue); line-height: 1; }
+    .w-stat-label { display: block; font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.3; }
+
+    /* Comparison */
+    .w-comp-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--subtle); margin-bottom: 12px; display: block; }
+    .w-comp-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      margin-bottom: 20px;
+    }
+    .w-comp-item { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+    .w-comp-item.bad  { border-color: rgba(239,68,68,0.25); }
+    .w-comp-item.good { border-color: rgba(34,197,94,0.3); }
+    .w-comp-screenshot {
+      width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top;
+      display: block; background: var(--surface);
+    }
+    .w-comp-badge {
+      position: absolute; top: 6px; right: 6px;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+    }
+    .w-comp-badge.bad  { background: #7f1d1d; color: #fca5a5; }
+    .w-comp-badge.good { background: #14532d; color: #86efac; }
+    .w-comp-footer { padding: 6px 8px; font-size: 9px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .w-comp-item.bad  .w-comp-footer { background: #0a0404; color: #7f1d1d; }
+    .w-comp-item.good .w-comp-footer { background: #040a04; color: #22c55e; }
+
+    /* Issues */
+    .w-issues { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+    .w-issue { font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; }
+    .w-issue-icon { flex-shrink: 0; font-size: 12px; }
+    .w-issue.bad  .w-issue-icon { color: #ef4444; }
+    .w-issue.good .w-issue-icon { color: #22c55e; }
+    .w-issue.good { color: rgba(255,255,255,0.75); }
+
+    /* Auth block */
+    .w-auth {
+      background: var(--surface); border-left: 2px solid var(--blue);
+      border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 28px;
+    }
+    .w-auth p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .w-auth p strong { color: rgba(255,255,255,0.8); }
+
+    /* Steps list */
+    .w-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+    .w-step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--subtle); }
+    .w-step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+
+    /* CTA */
+    .btn-primary {
+      display: block; width: 100%;
+      background: var(--blue); color: var(--white);
+      border-radius: 10px; padding: 16px 24px;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
+      text-align: center; transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* ═══════════════════════════════════════
+       QUESTION SCREEN
+    ═══════════════════════════════════════ */
+    .q-step-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 20px; display: block; }
+    .q-title { font-size: clamp(20px, 3.5vw, 26px); font-weight: 600; line-height: 1.3; margin-bottom: 8px; }
+    .q-hint { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
+
+    .q-input, .q-textarea {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+      font-size: 15px; color: var(--white); font-family: 'Inter', sans-serif;
+      line-height: 1.6; outline: none; transition: border-color 0.2s;
+      margin-bottom: 28px;
+    }
+    .q-input:focus, .q-textarea:focus { border-color: var(--blue); }
+    .q-input::placeholder, .q-textarea::placeholder { color: var(--subtle); }
+    .q-textarea { resize: vertical; min-height: 130px; }
+
+    /* Pills (domanda 6) */
+    .q-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .q-pill {
+      padding: 10px 22px; border-radius: 100px; font-size: 13px; font-weight: 500;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .q-pill:hover { border-color: var(--blue-border); color: var(--white); }
+    .q-pill.active { border-color: var(--blue); color: var(--blue); background: var(--blue-dim); }
+    .q-extra { margin-top: 4px; margin-bottom: 28px; }
+    .q-extra.hidden { display: none; }
+
+    /* Navigation */
+    .q-nav { display: flex; justify-content: space-between; align-items: center; }
+    .btn-back {
+      background: transparent; color: var(--subtle); font-size: 13px;
+      padding: 12px 0; transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--white); }
+    .btn-next {
+      background: var(--blue); color: var(--white); border-radius: 8px;
+      padding: 12px 24px; font-size: 13px; font-weight: 600;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-next:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ═══════════════════════════════════════
+       SENDING / DONE / ERROR SCREENS
+    ═══════════════════════════════════════ */
+    .center-screen {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; min-height: 60vh; gap: 20px;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 2px solid var(--border);
+      border-top-color: var(--blue);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Done icon */
+    .done-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--blue-dim); border: 1px solid var(--blue-border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .done-icon svg { width: 24px; height: 24px; stroke: var(--blue); fill: none; stroke-width: 2.5; }
+
+    /* Error icon */
+    .error-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+
+    .screen-title { font-size: 26px; font-weight: 700; }
+    .screen-sub { font-size: 15px; color: var(--muted); line-height: 1.65; max-width: 400px; }
+    .screen-sheet {
+      background: var(--surface); border: 1px solid var(--blue-border);
+      border-radius: 8px; padding: 12px 20px;
+      font-size: 11px; color: var(--blue); letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #25D366; color: #000; border-radius: 8px;
+      padding: 14px 24px; font-size: 13px; font-weight: 600;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .btn-wa:hover { opacity: 0.88; text-decoration: none; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .t-footer {
+      padding: 20px clamp(20px, 5vw, 48px);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .t-footer p { font-size: 10px; color: var(--subtle); letter-spacing: 1px; }
+    .t-footer a { color: var(--subtle); transition: color 0.2s; }
+    .t-footer a:hover { color: var(--blue); text-decoration: none; }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 480px) {
+      .w-comp-footer { font-size: 8px; }
+      .w-stats { gap: 8px; }
+      .w-stat-num { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="t-header">
+    <div class="t-logo">TRANS<span>IVA</span></div>
+    <div class="t-project">Progetto Giorgia Piras</div>
+  </header>
+
+  <!-- ═══ PROGRESS BAR ═══ -->
+  <div class="t-progress-wrap">
+    <div class="t-progress-fill" id="progress-fill"></div>
+  </div>
+
+  <!-- ═══ APP ═══ -->
+  <main id="app">
+
+    <!-- ── STATO 0: WELCOME ── -->
+    <div class="screen" id="screen-welcome">
+      <div class="screen-inner">
+        <span class="w-tag">Benvenuta nel tuo progetto</span>
+        <h1 class="w-title">Ciao <em id="client-name-title">Giorgia</em>,<br>questo è il tuo sito.</h1>
+        <p class="w-sub">Abbiamo preparato tutto. Ora abbiamo bisogno di te per renderlo davvero tuo.</p>
+
+        <!-- Stats -->
+        <div class="w-stats">
+          <div class="w-stat">
+            <span class="w-stat-num">40+</span>
+            <span class="w-stat-label">siti PT analizzati</span>
+          </div>
+          <div class="w-stat">
+            <span class="w-stat-num">9</span>
+            <span class="w-stat-label">sezioni ottimizzate</span>
+          </div>
+          <div class="w-stat">
+            <span class="w-stat-num">100%</span>
+            <span class="w-stat-label">su misura per te</span>
+          </div>
+        </div>
+
+        <!-- Comparison -->
+        <span class="w-comp-label">Cosa abbiamo trovato nel mercato</span>
+        <div class="w-comp-grid">
+          <div class="w-comp-item bad">
+            <img class="w-comp-screenshot" id="comp-img-1" src="" alt="Competitor 1" loading="lazy">
+            <div class="w-comp-badge bad">✗</div>
+            <div class="w-comp-footer" id="comp-label-1">competitor 1</div>
+          </div>
+          <div class="w-comp-item bad">
+            <img class="w-comp-screenshot" id="comp-img-2" src="" alt="Competitor 2" loading="lazy">
+            <div class="w-comp-badge bad">✗</div>
+            <div class="w-comp-footer" id="comp-label-2">competitor 2</div>
+          </div>
+          <div class="w-comp-item good">
+            <img class="w-comp-screenshot" id="comp-img-giorgia" src="" alt="giorgiapiras.it" loading="lazy">
+            <div class="w-comp-badge good">✓</div>
+            <div class="w-comp-footer">giorgiapiras.it ✦</div>
+          </div>
+        </div>
+
+        <!-- Issues -->
+        <div class="w-issues">
+          <div class="w-issue bad"><span class="w-issue-icon">✗</span><span>Nessuna CTA chiara above the fold</span></div>
+          <div class="w-issue bad"><span class="w-issue-icon">✗</span><span>Non ottimizzati per mobile</span></div>
+          <div class="w-issue bad"><span class="w-issue-icon">✗</span><span>Zero personalità — sembrano template Wix</span></div>
+          <div class="w-issue good"><span class="w-issue-icon">✓</span><span>Il tuo sito: ottimizzato, veloce, unico</span></div>
+        </div>
+
+        <!-- Auth -->
+        <div class="w-auth">
+          <p>Abbiamo costruito qualcosa di <strong>completamente diverso</strong>. Ora manca solo la parte più importante: <strong>la tua voce</strong>.</p>
+        </div>
+
+        <!-- Steps -->
+        <div class="w-steps">
+          <div class="w-step"><span class="w-step-dot"></span>La tua storia e bio autentica</div>
+          <div class="w-step"><span class="w-step-dot"></span>I tuoi clienti e i loro risultati</div>
+          <div class="w-step"><span class="w-step-dot"></span>Il tuo tocco personale sul design</div>
+        </div>
+
+        <button class="btn-primary" id="btn-start">Iniziamo — 9 domande →</button>
+      </div>
+    </div>
+
+    <!-- ── STATI 1–9: DOMANDE ── -->
+    <div class="screen hidden" id="screen-question">
+      <div class="screen-inner">
+        <span class="q-step-label" id="q-step-label">Domanda 1 di 9</span>
+        <h2 class="q-title" id="q-title"></h2>
+        <p class="q-hint" id="q-hint"></p>
+
+        <!-- Input testo breve (domande 1, 7) -->
+        <input type="text" class="q-input" id="q-input" placeholder="">
+
+        <!-- Textarea (domande 2, 3, 4, 5, 8, 9) -->
+        <textarea class="q-textarea" id="q-textarea" placeholder=""></textarea>
+
+        <!-- Pills Sì/No (domanda 6) -->
+        <div class="q-pills" id="q-pills">
+          <button class="q-pill" data-val="si" onclick="selectPill(this)">Sì, voglio mostrarli</button>
+          <button class="q-pill" data-val="no" onclick="selectPill(this)">No, solo "Contattami"</button>
+        </div>
+        <textarea class="q-textarea q-extra hidden" id="q-extra" placeholder="Es. Personal Training 1:1 — 60€/ora · Pacchetto 10 sessioni — 500€ · Coaching online — 150€/mese"></textarea>
+
+        <div class="q-nav">
+          <button class="btn-back" id="btn-back">← Indietro</button>
+          <button class="btn-next" id="btn-next">Avanti →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STATO 10: INVIO ── -->
+    <div class="screen hidden" id="screen-sending">
+      <div class="screen-inner">
+        <div class="center-screen">
+          <div class="spinner"></div>
+          <p class="screen-title" style="font-size:20px">Invio in corso...</p>
+          <p class="screen-sub">Stiamo salvando le tue risposte. Un attimo solo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STATO 11: GRAZIE ── -->
+    <div class="screen hidden" id="screen-done">
+      <div class="screen-inner">
+        <div class="center-screen">
+          <div class="done-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="screen-title">Perfetto, <span id="client-name-done">Giorgia</span>!</h2>
+          <p class="screen-sub">Le tue risposte sono state salvate. Il team Transiva le analizzerà e ti contatterà entro 48 ore con le modifiche al sito.</p>
+          <div class="screen-sheet">📊 Risposte salvate nel progetto</div>
+          <p style="font-size:12px;color:var(--subtle)">Ricordati di mandare le foto su WhatsApp quando sei pronta.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STATO ERR: ERRORE ── -->
+    <div class="screen hidden" id="screen-error">
+      <div class="screen-inner">
+        <div class="center-screen">
+          <div class="error-icon">⚠️</div>
+          <h2 class="screen-title" style="font-size:22px">Qualcosa non ha funzionato</h2>
+          <p class="screen-sub">Non è riuscito il salvataggio automatico. Scrivi direttamente su WhatsApp e ti aiutiamo subito.</p>
+          <a class="btn-wa" id="wa-fallback-link" href="#" target="_blank" rel="noopener">
+            💬 Scrivi su WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="t-footer">
+    <p>Un progetto <a href="https://transiva.it" target="_blank" rel="noopener">Transiva</a> · AI Agency</p>
+  </footer>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════
+       ⚙️  CONFIGURAZIONE — modifica questi valori
+    ═══════════════════════════════════════════════════════ */
+    const SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzlGxMuR-fhWHj-l4ZxOqvsKWVuO1SXZkU6vmGdFNET4gvDwhiVHF0uiTSPu6lo1ejYdQ/exec';
+    const COMPETITOR_1 = 'https://www.stefaniaverdenelli.it/';
+    const COMPETITOR_2 = 'https://www.ladyfitbiella.it/';
+    const GIORGIA_URL  = 'https://rodrigoapr01.github.io/giorgia-piras/';
+    const CLIENT_NAME  = 'Giorgia';
+    const WA_FALLBACK  = 'https://wa.me/393935896994';
+
+    /* ═══════════════════════════════════════════════════════
+       DOMANDE
+    ═══════════════════════════════════════════════════════ */
+    const QUESTIONS = [
+      {
+        id: 1,
+        title: 'Come ti chiami e dove operi?',
+        hint: 'Conferma il tuo nome completo, la città e se lavori in presenza, online o entrambi.',
+        type: 'input',
+        placeholder: 'Es. Giorgia Piras · Roma · Presenza + Online',
+        key: 'q1'
+      },
+      {
+        id: 2,
+        title: 'Raccontaci la tua storia come trainer.',
+        hint: 'Come hai iniziato? Cosa ti ha spinto? Perché ami questo lavoro? 3–5 frasi vanno benissimo.',
+        type: 'textarea',
+        placeholder: 'Es. Ho iniziato nel 2018 dopo aver vissuto in prima persona la trasformazione che porta l\'allenamento...',
+        key: 'q2'
+      },
+      {
+        id: 3,
+        title: 'Cosa ti rende diversa dagli altri trainer?',
+        hint: 'Il tuo approccio unico, la tua filosofia, quello che non troveresti da nessun altro professionista.',
+        type: 'textarea',
+        placeholder: 'Es. Non mi fermo ai numeri sulla bilancia. Lavoro sulla testa oltre che sul corpo...',
+        key: 'q3'
+      },
+      {
+        id: 4,
+        title: 'Chi è il tuo cliente ideale?',
+        hint: 'Età, obiettivi, tipo di persona. Chi vuoi attirare con il sito?',
+        type: 'textarea',
+        placeholder: 'Es. Donne tra 25 e 45 anni che vogliono dimagrire ma hanno già fallito con le diete classiche...',
+        key: 'q4'
+      },
+      {
+        id: 5,
+        title: 'Hai 2–3 testimonianze di clienti soddisfatti?',
+        hint: 'Nome (anche solo nome di battesimo), risultato ottenuto e una frase che descrive l\'esperienza con te. Le foto le mandi su WhatsApp dopo.',
+        type: 'textarea',
+        placeholder: 'Es.\nMaria, 34 anni — "Ho perso 8kg in 3 mesi senza mai sentirmi a dieta"\nLuca, 28 anni — "Finalmente capivo come allenarmi davvero..."',
+        key: 'q5'
+      },
+      {
+        id: 6,
+        title: 'Vuoi mostrare i prezzi sul sito?',
+        hint: 'Se sì, indicaci i tuoi pacchetti e tariffe. Se no, mettiamo solo "Contattami per un preventivo".',
+        type: 'pills',
+        key: 'q6'
+      },
+      {
+        id: 7,
+        title: 'Hai foto prima/dopo da mostrare?',
+        hint: 'Le foto ce le mandi su WhatsApp quando sei pronta. Scrivi qui solo una nota.',
+        type: 'input',
+        placeholder: 'Es. "Sì, ho 2 set · devo chiedere consenso al cliente" oppure "Non ancora"',
+        key: 'q7'
+      },
+      {
+        id: 8,
+        title: 'C\'è qualcosa nel sito attuale che non ti rappresenta?',
+        hint: 'Tono, colori, parole usate, sezioni, immagini... Nulla è definitivo. Questo è il momento di dirlo.',
+        type: 'textarea',
+        placeholder: 'Es. Il tono è un po\' troppo aggressivo per i miei gusti · Vorrei più foto mie · La sezione X non mi convince...',
+        key: 'q8'
+      },
+      {
+        id: 9,
+        title: 'C\'è qualcosa che vorresti aggiungere che ancora non c\'è?',
+        hint: 'Una sezione FAQ, una gallery, un blog, una pagina "Chi sono" dedicata, un calendario... qualsiasi idea va benissimo.',
+        type: 'textarea',
+        placeholder: 'Es. Vorrei una sezione con le domande frequenti · Un form di contatto diretto · Una gallery con foto del mio studio...',
+        key: 'q9'
+      }
+    ];
+
+    /* ═══════════════════════════════════════════════════════
+       STATE
+    ═══════════════════════════════════════════════════════ */
+    let currentStep = 0;   // 0 = welcome, 1–9 = domande, 10 = invio, 11 = grazie
+    let currentScreen = document.getElementById('screen-welcome');
+    const answers = {};
+    let pillValue = '';
+
+    /* ═══════════════════════════════════════════════════════
+       INIT
+    ═══════════════════════════════════════════════════════ */
+    (function init() {
+      // Nomi cliente
+      document.getElementById('client-name-title').textContent = CLIENT_NAME;
+      document.getElementById('client-name-done').textContent  = CLIENT_NAME;
+      document.getElementById('wa-fallback-link').href = WA_FALLBACK;
+
+      // Screenshots Microlink
+      function microlink(url) {
+        return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&embed=screenshot.url`;
+      }
+      const hostname = url => { try { return new URL(url).hostname.replace('www.',''); } catch(e){ return url; } };
+
+      document.getElementById('comp-img-1').src         = microlink(COMPETITOR_1);
+      document.getElementById('comp-img-2').src         = microlink(COMPETITOR_2);
+      document.getElementById('comp-img-giorgia').src   = microlink(GIORGIA_URL);
+      document.getElementById('comp-label-1').textContent = hostname(COMPETITOR_1);
+      document.getElementById('comp-label-2').textContent = hostname(COMPETITOR_2);
+
+      // Event listeners
+      document.getElementById('btn-start').addEventListener('click', () => goToStep(1));
+      document.getElementById('btn-next').addEventListener('click', handleNext);
+      document.getElementById('btn-back').addEventListener('click', handleBack);
+    }());
+
+    /* ═══════════════════════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════════════════════ */
+    function goToStep(step, direction = 'forward') {
+      const nextScreen = getScreenForStep(step);
+      transition(currentScreen, nextScreen, direction);
+      currentStep = step;
+      currentScreen = nextScreen;
+      updateProgress();
+
+      if (step >= 1 && step <= 9) renderQuestion(step);
+    }
+
+    function handleNext() {
+      saveAnswer(currentStep);
+      if (currentStep === 9) {
+        submitAnswers();
+      } else {
+        goToStep(currentStep + 1, 'forward');
+      }
+    }
+
+    function handleBack() {
+      if (currentStep === 1) {
+        goToStep(0, 'back');
+      } else {
+        goToStep(currentStep - 1, 'back');
+      }
+    }
+
+    function getScreenForStep(step) {
+      if (step === 0)  return document.getElementById('screen-welcome');
+      if (step <= 9)   return document.getElementById('screen-question');
+      if (step === 10) return document.getElementById('screen-sending');
+      if (step === 11) return document.getElementById('screen-done');
+      return document.getElementById('screen-error');
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TRANSITIONS
+    ═══════════════════════════════════════════════════════ */
+    function transition(from, to, direction) {
+      if (from === to) return;
+
+      // Scroll to top inside next screen
+      to.scrollTop = 0;
+
+      // Set initial position of incoming screen
+      if (direction === 'forward') {
+        to.style.transform = 'translateX(40px)';
+      } else {
+        to.style.transform = 'translateX(-40px)';
+      }
+      to.style.opacity = '0';
+      to.classList.remove('hidden');
+      to.style.transition = 'none';
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          // Animate out
+          from.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+          from.style.opacity    = '0';
+          from.style.transform  = direction === 'forward' ? 'translateX(-40px)' : 'translateX(40px)';
+
+          // Animate in
+          to.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+          to.style.opacity    = '1';
+          to.style.transform  = 'translateX(0)';
+
+          setTimeout(() => {
+            from.classList.add('hidden');
+            from.style.transform = '';
+            from.style.opacity   = '';
+            from.style.transition = '';
+            to.style.transition = '';
+          }, 300);
+        });
+      });
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       PROGRESS BAR
+    ═══════════════════════════════════════════════════════ */
+    function updateProgress() {
+      const pct = currentStep === 0 ? 0 : Math.round((currentStep / 9) * 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RENDER QUESTION
+    ═══════════════════════════════════════════════════════ */
+    function renderQuestion(step) {
+      const q = QUESTIONS[step - 1];
+
+      document.getElementById('q-step-label').textContent = `Domanda ${step} di 9`;
+      document.getElementById('q-title').textContent = q.title;
+      document.getElementById('q-hint').textContent  = q.hint;
+
+      const input    = document.getElementById('q-input');
+      const textarea = document.getElementById('q-textarea');
+      const pills    = document.getElementById('q-pills');
+      const extra    = document.getElementById('q-extra');
+      const btnNext  = document.getElementById('btn-next');
+
+      // Hide all first
+      input.style.display    = 'none';
+      textarea.style.display = 'none';
+      pills.style.display    = 'none';
+      extra.classList.add('hidden');
+
+      if (q.type === 'input') {
+        input.style.display    = 'block';
+        input.placeholder      = q.placeholder || '';
+        input.value            = answers[q.key] || '';
+        setTimeout(() => input.focus(), 320);
+
+      } else if (q.type === 'textarea') {
+        textarea.style.display = 'block';
+        textarea.placeholder   = q.placeholder || '';
+        textarea.value         = answers[q.key + '_text'] || answers[q.key] || '';
+        setTimeout(() => textarea.focus(), 320);
+
+      } else if (q.type === 'pills') {
+        pills.style.display    = 'flex';
+        pillValue = answers['q6_yn'] || '';
+        // Restore pill state
+        document.querySelectorAll('.q-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.val === pillValue);
+        });
+        if (pillValue === 'si') {
+          extra.classList.remove('hidden');
+          extra.value = answers['q6_detail'] || '';
+        }
+      }
+
+      btnNext.textContent = step === 9 ? 'Invia le mie risposte ✓' : 'Avanti →';
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       PILLS (domanda 6)
+    ═══════════════════════════════════════════════════════ */
+    function selectPill(btn) {
+      document.querySelectorAll('.q-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      pillValue = btn.dataset.val;
+      const extra = document.getElementById('q-extra');
+      if (pillValue === 'si') {
+        extra.classList.remove('hidden');
+        setTimeout(() => extra.focus(), 50);
+      } else {
+        extra.classList.add('hidden');
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SAVE ANSWER
+    ═══════════════════════════════════════════════════════ */
+    function saveAnswer(step) {
+      if (step < 1 || step > 9) return;
+      const q = QUESTIONS[step - 1];
+
+      if (q.type === 'input') {
+        answers[q.key] = document.getElementById('q-input').value.trim();
+      } else if (q.type === 'textarea') {
+        answers[q.key] = document.getElementById('q-textarea').value.trim();
+      } else if (q.type === 'pills') {
+        answers['q6_yn']     = pillValue;
+        answers['q6_detail'] = document.getElementById('q-extra').value.trim();
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SUBMIT
+    ═══════════════════════════════════════════════════════ */
+    async function submitAnswers() {
+      saveAnswer(9);
+      goToStep(10, 'forward');
+
+      const payload = {
+        q1: answers.q1 || '',
+        q2: answers.q2 || '',
+        q3: answers.q3 || '',
+        q4: answers.q4 || '',
+        q5: answers.q5 || '',
+        q6_yn:     answers.q6_yn     || '',
+        q6_detail: answers.q6_detail || '',
+        q7: answers.q7 || '',
+        q8: answers.q8 || '',
+        q9: answers.q9 || '',
+        client: CLIENT_NAME,
+        submitted_at: new Date().toISOString()
+      };
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: { 'Content-Type': 'text/plain' }
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+        if (json.status !== 'ok') throw new Error('Script error');
+        goToStep(11, 'forward');
+      } catch (err) {
+        console.error('Submit error:', err);
+        goToStep('err', 'forward');
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       KEYBOARD NAVIGATION
+    ═══════════════════════════════════════════════════════ */
+    document.addEventListener('keydown', e => {
+      if (currentStep === 0 && e.key === 'Enter') {
+        goToStep(1);
+      } else if (currentStep >= 1 && currentStep <= 9) {
+        const active = document.activeElement;
+        const isTextarea = active && active.tagName === 'TEXTAREA';
+        if (e.key === 'Enter' && !isTextarea) {
+          handleNext();
+        }
+      }
+    });
+  </script>
+
+  <!--
+  ═══════════════════════════════════════════════════════════
+  📋 SETUP GOOGLE APPS SCRIPT — istruzioni per il developer
+  ═══════════════════════════════════════════════════════════
+
+  1. Vai su https://sheets.google.com → crea un nuovo foglio
+     Aggiungi intestazioni in riga 1:
+     Timestamp | Nome/Città | Storia | Differenziazione | Cliente Ideale |
+     Testimonianze | Prezzi Y/N | Dettaglio Prezzi | Nota Foto |
+     Feedback Design | Aggiunte
+
+  2. Estensioni → Apps Script → incolla questo codice:
+
+     function doPost(e) {
+       var data = JSON.parse(e.postData.contents);
+       var sheet = SpreadsheetApp.getActiveSheet();
+       sheet.appendRow([
+         new Date(),
+         data.q1, data.q2, data.q3, data.q4, data.q5,
+         data.q6_yn, data.q6_detail,
+         data.q7, data.q8, data.q9
+       ]);
+       return ContentService
+         .createTextOutput(JSON.stringify({ status: 'ok' }))
+         .setMimeType(ContentService.MimeType.JSON);
+     }
+
+  3. Deploy → New deployment → Web App
+     - Execute as: Me
+     - Who has access: Anyone
+     → Copia l'URL del deployment
+
+  4. Incolla l'URL nella costante SCRIPT_URL in cima a questo file.
+
+  5. Inserisci i 2 URL competitor in COMPETITOR_1 e COMPETITOR_2.
+
+  6. Testa aprendo onboarding.html in locale → compila → verifica la riga nel Sheet.
+
+  7. Fai git push → manda a Giorgia il link:
+     https://rodrigoapr01.github.io/giorgia-piras/onboarding.html
+  ═══════════════════════════════════════════════════════════
+  -->
+
+</body>
+</html>
