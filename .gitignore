@@ -1,0 +1,4 @@
+.claude/
+.superpowers/
+*.code-workspace
+.DS_Store
