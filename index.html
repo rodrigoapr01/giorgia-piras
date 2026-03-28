@@ -646,12 +646,27 @@
 
     @media (max-width: 768px) {
       .video-trigger {
-        bottom: 80px;
+        bottom: 24px;
         right: 20px;
         gap: 10px;
       }
       .video-trigger-ring { width: 70px; height: 70px; }
-      .video-trigger-label { display: none; }
+      .video-trigger {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .video-trigger-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .video-trigger-label span:first-child { display: none; }
+      .video-trigger-label span:last-child {
+        font-size: 11px;
+        color: rgba(255,255,255,0.55);
+      }
     }
 
     .hero-scroll-ind {
@@ -1704,7 +1719,7 @@
         <div class="video-trigger-circle">
           <video
             class="video-trigger-preview"
-            src="Giorgia_hero.mp4"
+            src="Giorgia_hero_2.mp4"
             autoplay muted loop playsinline
             aria-hidden="true"
           ></video>
@@ -1731,7 +1746,7 @@
       </button>
       <video
         id="modal-video"
-        src="Giorgia_hero.mp4"
+        src="Giorgia_hero_2.mp4"
         controls
         playsinline
       ></video>
