@@ -44,7 +44,7 @@
        RESET & BASE
     ═══════════════════════════════════════ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: auto; overflow: hidden auto; } /* Lenis handles smooth scroll */
+    html { scroll-behavior: auto; overflow-x: clip; } /* Lenis handles smooth scroll */
     body {
       background: var(--black);
       color: var(--white);
