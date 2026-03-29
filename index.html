@@ -2667,6 +2667,7 @@
 
     videoTrigger.addEventListener('click', openVideoModal);
     videoClose.addEventListener('click', closeVideoModal);
+    modalVideo.addEventListener('ended', closeVideoModal);
 
     // Chiudi cliccando fuori dal video
     videoModal.addEventListener('click', (e) => {
