@@ -266,7 +266,7 @@
     /* ═══════════════════════════════════════
        NAV
     ═══════════════════════════════════════ */
-    nav {
+    #main-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 900;
@@ -278,12 +278,12 @@
       background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
       will-change: transform;
     }
-    nav.scrolled {
+    #main-nav.scrolled {
       background: var(--black);
       padding: 16px 48px;
       border-bottom: 1px solid var(--white-06);
     }
-    nav.nav-hidden { transform: translateY(-100%); }
+    #main-nav.nav-hidden { transform: translateY(-100%); }
     .nav-logo { display: flex; align-items: center; }
     .nav-logo img {
       height: 400px;
@@ -291,7 +291,7 @@
       transition: height 0.4s ease;
       display: block;
     }
-    nav.scrolled .nav-logo img { height: 70px; }
+    #main-nav.scrolled .nav-logo img { height: 70px; }
     .nav-logo-text {
       color: var(--gold);
       font-size: 11px;
@@ -1586,11 +1586,11 @@
     ═══════════════════════════════════════ */
     @media (max-width: 768px) {
       /* Nav — logo floats in top-left corner, hamburger top-right */
-      nav {
+      #main-nav {
         padding: 14px 18px;
         justify-content: flex-end;
       }
-      nav.scrolled { padding: 12px 18px; }
+      #main-nav.scrolled { padding: 12px 18px; }
       .nav-logo {
         position: absolute;
         top: -70px;
@@ -1599,11 +1599,11 @@
         transition: top 0.4s ease, left 0.4s ease;
       }
       .nav-logo img { height: 240px; }
-      nav.scrolled .nav-logo {
+      #main-nav.scrolled .nav-logo {
         top: 6px;
         left: 12px;
       }
-      nav.scrolled .nav-logo img { height: 60px; }
+      #main-nav.scrolled .nav-logo img { height: 60px; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
 
@@ -1875,7 +1875,7 @@
        DESKTOP NAV — logo floats in top-left corner
     ═══════════════════════════════════════ */
     @media (min-width: 769px) {
-      nav {
+      #main-nav {
         padding: 30px 48px;
         justify-content: flex-end;
       }
