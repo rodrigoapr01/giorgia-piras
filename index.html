@@ -1857,6 +1857,22 @@
       margin-top: 3px;
     }
 
+    /* ═══════════════════════════════════════
+       DESKTOP NAV — logo floats in top-left corner
+    ═══════════════════════════════════════ */
+    @media (min-width: 769px) {
+      nav {
+        padding: 30px 48px;
+        justify-content: flex-end;
+      }
+      .nav-logo {
+        position: absolute;
+        top: 10px;
+        left: 30px;
+        z-index: 10;
+      }
+    }
+
     /* Come Funziona & Weal House — mobile */
     @media (max-width: 768px) {
       .cf-step {
