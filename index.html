@@ -1596,8 +1596,13 @@
         top: -25px;
         left: -20px;
         z-index: 10;
+        transition: top 0.4s ease, left 0.4s ease;
       }
       .nav-logo img { height: 240px; }
+      nav.scrolled .nav-logo {
+        top: 6px;
+        left: 12px;
+      }
       nav.scrolled .nav-logo img { height: 60px; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
