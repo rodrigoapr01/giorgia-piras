@@ -1585,9 +1585,18 @@
        RESPONSIVE — Mobile (≤768px)
     ═══════════════════════════════════════ */
     @media (max-width: 768px) {
-      /* Nav */
-      nav { padding: 4px 12px 4px 6px; }
-      nav.scrolled { padding: 4px 12px 4px 6px; }
+      /* Nav — logo floats in top-left corner, hamburger top-right */
+      nav {
+        padding: 14px 18px;
+        justify-content: flex-end;
+      }
+      nav.scrolled { padding: 12px 18px; }
+      .nav-logo {
+        position: absolute;
+        top: 4px;
+        left: 6px;
+        z-index: 10;
+      }
       .nav-logo img { height: 180px; }
       nav.scrolled .nav-logo img { height: 60px; }
       .nav-links { display: none; }
