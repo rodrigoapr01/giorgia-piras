@@ -249,6 +249,7 @@
        INITIAL ANIMATION STATES
     ═══════════════════════════════════════ */
     .nav-logo-text,
+    .nav-logo,
     .nav-link,
     .nav-cta-btn,
     .hero-label,
@@ -2544,7 +2545,7 @@
     });
 
     // Nav elements
-    tl.to('.nav-logo-text', { opacity: 1, y: 0, duration: 0.8, from: { y: -20 } })
+    tl.to('.nav-logo-text, .nav-logo', { opacity: 1, y: 0, duration: 0.8, from: { y: -20 } })
       .to('.nav-link',     { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, from: { y: -10 } }, '-=0.5')
       .to('.nav-cta-btn',  { opacity: 1, duration: 0.5 }, '-=0.4');
 
