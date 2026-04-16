@@ -1625,6 +1625,236 @@
       /* Footer copy wrap su schermi piccoli */
       .footer-copy { font-size: 9px; }
     }
+
+    /* ═══════════════════════════════════════
+       COME FUNZIONA
+    ═══════════════════════════════════════ */
+    #come-funziona {
+      padding: clamp(80px, 10vw, 130px) clamp(20px, 5vw, 60px);
+      background: var(--black);
+    }
+    .cf-header {
+      text-align: center;
+      margin-bottom: clamp(48px, 6vw, 80px);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cf-subtitle {
+      color: rgba(255,255,255,0.4);
+      font-size: clamp(10px, 1.1vw, 12px);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+    .cf-steps {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .cf-step {
+      display: grid;
+      grid-template-columns: 88px 1fr 80px;
+      gap: 0 32px;
+      align-items: center;
+      padding: clamp(28px, 4vw, 44px) 0;
+      border-bottom: 1px solid var(--white-06);
+    }
+    .cf-step:first-child { border-top: 1px solid var(--white-06); }
+    .cf-step-num {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: clamp(48px, 6vw, 80px);
+      color: var(--gold);
+      opacity: 0.25;
+      line-height: 1;
+      letter-spacing: -2px;
+      text-align: center;
+    }
+    .cf-step-content { padding: 6px 0; }
+    .cf-step-title {
+      font-family: Impact, 'Arial Narrow', sans-serif;
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .cf-step-text {
+      color: rgba(255,255,255,0.42);
+      font-size: clamp(12px, 1.1vw, 14px);
+      line-height: 1.8;
+      max-width: 580px;
+    }
+    .cf-step-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .cf-step-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .cf-cta-wrap {
+      text-align: center;
+      margin-top: clamp(48px, 5vw, 64px);
+    }
+
+    /* ═══════════════════════════════════════
+       WEAL HOUSE
+    ═══════════════════════════════════════ */
+    #weal-house {
+      background: #111111;
+      padding: clamp(80px, 10vw, 130px) clamp(20px, 5vw, 60px);
+      position: relative;
+      overflow: hidden;
+    }
+    .wh-bg-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(280px, 50vw, 650px);
+      opacity: 0.04;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+      filter: invert(1);
+    }
+    .wh-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .wh-text {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .wh-body {
+      color: rgba(255,255,255,0.45);
+      font-size: clamp(12px, 1.15vw, 14px);
+      line-height: 1.85;
+    }
+    .wh-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .wh-tag {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,169,110,0.28);
+      padding: 7px 14px;
+    }
+    .wh-address {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: rgba(255,255,255,0.4);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+    }
+    .wh-address svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .wh-instagram {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: opacity 0.25s;
+      align-self: flex-start;
+    }
+    .wh-instagram:hover { opacity: 0.65; }
+    .wh-card-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      align-items: center;
+    }
+    .wh-card {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background: #1a1a1a;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wh-card-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .wh-card-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 10px 16px;
+    }
+    .wh-card-badge-line1 {
+      display: block;
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .wh-card-badge-line2 {
+      display: block;
+      font-family: Impact, sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 3px;
+    }
+
+    /* Come Funziona & Weal House — mobile */
+    @media (max-width: 768px) {
+      .cf-step {
+        grid-template-columns: 56px 1fr;
+        gap: 0 20px;
+      }
+      .cf-step-icon { display: none; }
+      .wh-grid { grid-template-columns: 1fr; }
+      .wh-card-wrap { order: -1; }
+      .wh-card { aspect-ratio: 4 / 3; }
+    }
   </style>
 </head>
 <body>
@@ -1647,6 +1877,8 @@
   <div id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu di navigazione">
     <a class="overlay-link" href="#chi-sono" onclick="closeNav()">Chi sono</a>
     <a class="overlay-link" href="#servizi" onclick="closeNav()">Servizi</a>
+    <a class="overlay-link" href="#come-funziona" onclick="closeNav()">Come Funziona</a>
+    <a class="overlay-link" href="#weal-house" onclick="closeNav()">La Palestra</a>
     <a class="overlay-link" href="#risultati" onclick="closeNav()">Risultati</a>
     <div class="btn-lm btn-lm--green" style="margin-top:16px;">
       <div class="btn-lm-canvas" data-lm-canvas></div>
@@ -1664,6 +1896,8 @@
     <div class="nav-links" role="navigation">
       <a class="nav-link" href="#chi-sono">Chi sono</a>
       <a class="nav-link" href="#servizi">Servizi</a>
+      <a class="nav-link" href="#come-funziona">Come Funziona</a>
+      <a class="nav-link" href="#weal-house">La Palestra</a>
       <a class="nav-link" href="#risultati">Risultati</a>
       <div class="btn-lm btn-lm--green">
         <div class="btn-lm-canvas" data-lm-canvas></div>
@@ -1847,11 +2081,105 @@
           <div class="stat-label">Personalizzato</div>
         </div>
       </div>
-      <div class="btn-lm btn-lm--green" style="align-self:flex-start;">
+      <div class="btn-lm btn-lm--green" style="align-self:center;">
         <div class="btn-lm-canvas" data-lm-canvas></div>
         <div class="btn-lm-inner"></div>
-        <span class="btn-lm-label">Parliamo su WhatsApp</span>
+        <span class="btn-lm-label">💬 Parliamo su WhatsApp</span>
         <a class="btn-lm-hit" href="https://wa.me/393935896994" target="_blank" rel="noopener" aria-label="Parliamo su WhatsApp"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COME FUNZIONA ═══ -->
+  <section id="come-funziona" aria-labelledby="cf-title">
+    <div class="cf-header">
+      <span class="section-tag">Il Metodo</span>
+      <h2 class="section-title" id="cf-title">DA DOVE SEI /<br><span class="gold">A DOVE VUOI ARRIVARE.</span></h2>
+      <p class="cf-subtitle">Non esiste un piano uguale per tutti. Esiste il tuo piano.</p>
+    </div>
+    <div class="cf-steps">
+      <div class="cf-step">
+        <div class="cf-step-num">01</div>
+        <div class="cf-step-content">
+          <div class="cf-step-title">CI PARLIAMO</div>
+          <p class="cf-step-text">Prima consulenza gratuita. Nessun modulo, nessuna pressione. Solo una conversazione reale su dove sei adesso e dove vuoi arrivare. Giorgia ascolta prima di tutto.</p>
+        </div>
+        <div class="cf-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+      </div>
+      <div class="cf-step">
+        <div class="cf-step-num">02</div>
+        <div class="cf-step-content">
+          <div class="cf-step-title">IL TUO PERCORSO</div>
+          <p class="cf-step-text">Giorgia studia il tuo profilo — obiettivi, stile di vita, abitudini, disponibilità. Costruisce un percorso su misura. Non un template. Il tuo piano.</p>
+        </div>
+        <div class="cf-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+      </div>
+      <div class="cf-step">
+        <div class="cf-step-num">03</div>
+        <div class="cf-step-content">
+          <div class="cf-step-title">SI LAVORA</div>
+          <p class="cf-step-text">Training 1:1, coaching online o programma su misura — qualunque modalità scegli, ogni sessione è calibrata su di te. Nessuna scorciatoia. Solo lavoro vero.</p>
+        </div>
+        <div class="cf-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </div>
+      </div>
+      <div class="cf-step">
+        <div class="cf-step-num">04</div>
+        <div class="cf-step-content">
+          <div class="cf-step-title">EVOLVI</div>
+          <p class="cf-step-text">Il percorso non finisce con la prima trasformazione. Monitoraggio costante, aggiustamenti continui. Il risultato non è un traguardo — è un nuovo punto di partenza.</p>
+        </div>
+        <div class="cf-step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="cf-cta-wrap">
+      <div class="btn-lm btn-lm--green" style="margin:0 auto;">
+        <div class="btn-lm-canvas" data-lm-canvas></div>
+        <div class="btn-lm-inner"></div>
+        <span class="btn-lm-label">💬 Inizia con la consulenza gratuita</span>
+        <a class="btn-lm-hit" href="https://wa.me/393935896994" target="_blank" rel="noopener" aria-label="Inizia con la consulenza gratuita"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WEAL HOUSE ═══ -->
+  <section id="weal-house" aria-labelledby="wh-title">
+    <img class="wh-bg-logo" src="logo%20weal%20house.jpeg" alt="" aria-hidden="true" />
+    <div class="wh-grid">
+      <div class="wh-text">
+        <span class="section-tag">La Palestra</span>
+        <h2 class="section-title" id="wh-title">DOVE IL /<br><span class="gold">LAVORO ACCADE.</span></h2>
+        <p class="wh-body">Weal House non è una palestra comune. È la casa che Giorgia ha fondato — uno spazio costruito attorno all'idea che allenarsi bene significa avere intorno le persone giuste, le attrezzature giuste, e un ambiente che ti spinge a dare di più ogni giorno.</p>
+        <p class="wh-body">Qui trovi tutto quello che ti serve per trasformarti davvero: personal training, calisthenics, pilates, supporto nutrizionale e osteopatico. Un team che ti segue a 360 gradi.</p>
+        <div class="wh-tags">
+          <span class="wh-tag">Personal Training</span>
+          <span class="wh-tag">Calisthenics</span>
+          <span class="wh-tag">Pilates</span>
+          <span class="wh-tag">Nutrizionista</span>
+          <span class="wh-tag">Osteopata</span>
+        </div>
+        <div class="wh-address">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Via Michele Amari 51–55, Roma (Appio Latino)</span>
+        </div>
+        <a class="wh-instagram" href="https://www.instagram.com/wealhousecommunity/" target="_blank" rel="noopener">@wealhousecommunity →</a>
+      </div>
+      <div class="wh-card-wrap">
+        <div class="wh-card">
+          <img class="wh-card-photo" src="palestra%20weal%20house.jpg" alt="Giorgia Piras allena un cliente nella palestra Weal House, Roma" />
+          <div class="wh-card-badge">
+            <span class="wh-card-badge-line1">Fondata da</span>
+            <span class="wh-card-badge-line2">Giorgia Piras</span>
+          </div>
+        </div>
+        <a class="btn-ghost" href="https://maps.google.com/?q=Via+Michele+Amari+51+Roma" target="_blank" rel="noopener">Vieni a trovarci</a>
       </div>
     </div>
   </section>
@@ -2029,6 +2357,8 @@
           <ul class="footer-nav-links">
             <li><a href="#servizi">Servizi</a></li>
             <li><a href="#chi-sono">Chi Sono</a></li>
+            <li><a href="#come-funziona">Come Funziona</a></li>
+            <li><a href="#weal-house">La Palestra</a></li>
             <li><a href="#risultati">Risultati</a></li>
             <li><a href="#contatti">Contatti</a></li>
           </ul>
@@ -2392,6 +2722,35 @@
       {
         opacity: 1, y: 0, duration: 0.7,
         scrollTrigger: { trigger: '#contatti', start: 'top 60%' },
+      }
+    );
+
+    // Come Funziona
+    fadeUp('.cf-header', '#come-funziona', { y: 40 });
+    gsap.fromTo('.cf-step',
+      { opacity: 0, x: -30 },
+      {
+        opacity: 1, x: 0, duration: 0.7,
+        stagger: 0.13,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.cf-steps', start: 'top 78%' },
+      }
+    );
+    fadeUp('.cf-cta-wrap', '#come-funziona', { y: 28, duration: 0.7 });
+
+    // Weal House
+    gsap.fromTo('.wh-text',
+      { opacity: 0, x: -50 },
+      {
+        opacity: 1, x: 0, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: '#weal-house', start: 'top 72%' },
+      }
+    );
+    gsap.fromTo('.wh-card-wrap',
+      { opacity: 0, x: 50 },
+      {
+        opacity: 1, x: 0, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: '#weal-house', start: 'top 72%' },
       }
     );
 
