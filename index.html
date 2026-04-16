@@ -282,6 +282,14 @@
       padding: 16px 48px;
       border-bottom: 1px solid var(--white-06);
     }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo img {
+      height: 250px;
+      width: auto;
+      transition: height 0.4s ease;
+      display: block;
+    }
+    nav.scrolled .nav-logo img { height: 70px; }
     .nav-logo-text {
       color: var(--gold);
       font-size: 11px;
@@ -1892,7 +1900,7 @@
   <!-- ═══ NAV ═══ -->
   <nav id="main-nav" aria-label="Navigazione principale">
     <a href="#hero" class="nav-logo">
-      <img src="LP_93.png" alt="Giorgia Piras" style="height: 300px; width: auto;">
+      <img src="LP_93.png" alt="Giorgia Piras">
     </a>
     <div class="nav-links" role="navigation">
       <a class="nav-link" href="#chi-sono">Chi sono</a>
@@ -2513,7 +2521,7 @@
     ═══════════════════════════════════════ */
     const nav = document.getElementById('main-nav');
     ScrollTrigger.create({
-      start: 'top -72',
+      start: 'top -100',
       onEnter:     () => nav.classList.add('scrolled'),
       onLeaveBack: () => nav.classList.remove('scrolled'),
     });
