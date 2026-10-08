@@ -76,6 +76,27 @@ a { touch-action: manipulation; }
 .foot a { display: inline-flex; align-items: center; min-height: 44px; }
 .foot-legal { display: flex; gap: 18px; margin-left: auto; }
 
+/* ---------- WhatsApp fixed button: phones only, compact, bottom-right, always on ---------- */
+.fab {
+  position: fixed; z-index: 30;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 48px; padding: 0 18px; border: 1.5px solid var(--bronzo); border-radius: 999px;
+  background: var(--nero); color: var(--pietra); font-weight: 500; text-decoration: none;
+  box-shadow: 0 6px 20px rgba(25, 23, 22, 0.45);
+  -webkit-touch-callout: none; user-select: none; -webkit-user-select: none;
+  transition: transform 160ms var(--ease-out);
+}
+.fab:active { transform: scale(0.97); }
+/* phones: the name on two lines keeps the right side of the first screen free for the button;
+   room at the end of the page so the last links scroll clear of it */
+@media (max-width: 767px) {
+  .hero-name .nm { display: block; }
+  .foot { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 88px); }
+}
+@media (min-width: 768px) { .fab { display: none; } }
+
 @media (hover: hover) and (pointer: fine) {
   .btn:hover { background: #fff; }
   .hero-links a:hover, .foot a:hover { text-decoration-color: currentColor; }
@@ -101,5 +122,5 @@ a { touch-action: manipulation; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn { transition: none; }
+  .btn, .fab { transition: none; }
 }
